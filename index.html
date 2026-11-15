@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Utilities</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧰</text></svg>">
+<style>
+:root{--bg:#f6f7f2;--card:#fff;--ink:#1d2a20;--mute:#6b7a6e;--acc:#2f8f4e;--line:#e2e6dd}
+@media(prefers-color-scheme:dark){:root{--bg:#121a14;--card:#1b261e;--ink:#e8f0ea;--mute:#93a398;--acc:#4cc272;--line:#2b3a2f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;
+padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.wrap{max-width:560px;margin:0 auto;padding:28px 16px 40px}
+h1{margin:0;font-size:28px}
+.sub{margin:4px 0 18px;color:var(--mute)}
+#q{width:100%;padding:13px 14px;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+a.card{display:flex;flex-direction:column;gap:6px;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;color:inherit;text-decoration:none;min-height:130px}
+a.card:active{transform:scale(.98)}
+.ico{font-size:30px}
+.nm{font-weight:700;font-size:17px}
+.ds{font-size:13px;color:var(--mute)}
+.empty{grid-column:1/-1;text-align:center;color:var(--mute);padding:24px 0}
+@media(max-width:340px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>My Utilities</h1>
+  <p class="sub">Tap a tool to open it.</p>
+  <input id="q" type="search" placeholder="Search tools…" autocomplete="off">
+  <div class="grid" id="grid"></div>
+</div>
+<script>
+// To add a utility, add one line to this list.
+var LINKS=[
+  {icon:"🍎",name:"Diet Tracker",desc:"Daily meals, 16–25 Nov",url:"https://claude.ai/artifact/HukzFSUDpoF59JkoD1Ufjo"}
+  // ,{icon:"⏱️",name:"Countup",desc:"Days together",url:"https://example.com/"}
+];
+var grid=document.getElementById("grid"),q=document.getElementById("q");
+function render(){
+  var s=q.value.trim().toLowerCase();grid.textContent="";
+  var shown=LINKS.filter(function(l){return !s||(l.name+" "+l.desc).toLowerCase().indexOf(s)>-1});
+  shown.forEach(function(l){
+    var a=document.createElement("a");a.className="card";a.href=l.url;
+    [["ico",l.icon],["nm",l.name],["ds",l.desc]].forEach(function(p){var d=document.createElement("div");d.className=p[0];d.textContent=p[1];a.appendChild(d)});
+    grid.appendChild(a);
+  });
+  if(!shown.length){var e=document.createElement("div");e.className="empty";e.textContent="No tools found";grid.appendChild(e)}
+}
+q.addEventListener("input",render);render();
+</script>
+</body>
+</html>

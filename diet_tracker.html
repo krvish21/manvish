@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diet Tracker</title>
+<style>
+:root{--bg:#f6f7f2;--card:#fff;--ink:#1d2a20;--mute:#6b7a6e;--acc:#2f8f4e;--accbg:#e3f3e8;--line:#e2e6dd;--del:#c2410c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a14;--card:#1b261e;--ink:#e8f0ea;--mute:#93a398;--acc:#4cc272;--accbg:#223a2a;--line:#2b3a2f;--del:#fb923c}}
+:root[data-theme="dark"]{--bg:#121a14;--card:#1b261e;--ink:#e8f0ea;--mute:#93a398;--acc:#4cc272;--accbg:#223a2a;--line:#2b3a2f;--del:#fb923c}
+*{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+.app{max-width:480px;margin:0 auto;padding:14px 16px 40px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.nav{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px}
+.nav:disabled{opacity:.3}
+.title{text-align:center}
+.title h1{margin:0;font-size:24px}
+.title p{margin:2px 0 0;color:var(--mute);font-size:14px}
+.dots{display:flex;justify-content:center;gap:6px;margin:12px 0}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--acc);width:20px;border-radius:4px}
+.prog{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.prog div{height:100%;background:var(--acc);transition:width .25s}
+.meta{display:flex;justify-content:space-between;margin:6px 2px 12px;font-size:13px;color:var(--mute)}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px}
+.item.done{opacity:.55}.item.done .n{text-decoration:line-through}
+.chk{width:28px;height:28px;border-radius:50%;border:2px solid var(--acc);background:transparent;color:#fff;font-size:16px;flex:none}
+.done .chk{background:var(--acc)}
+.t{font-size:13px;color:var(--mute);min-width:62px}
+.n{flex:1;font-size:17px}
+.item input{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;min-width:0}
+.item input[type=time]{width:112px;flex:none}
+.item input[type=text]{flex:1}
+.x{border:0;background:none;color:var(--del);font-size:20px;width:36px;height:36px}
+.bar{display:flex;gap:8px;margin-top:12px}
+.btn{flex:1;padding:13px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600}
+.btn.p{background:var(--acc);border-color:var(--acc);color:#fff}
+.st{text-align:center;color:var(--mute);font-size:12px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+(function(){
+var START=new Date(2026,10,16),N=10;
+var DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function dayDate(i){return new Date(START.getFullYear(),START.getMonth(),START.getDate()+i)}
+function key(i){var d=dayDate(i);return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+var uid=0;function id(){return "i"+Date.now().toString(36)+(uid++)}
+function seed(){
+  var days={};
+  for(var i=0;i<N;i++){
+    var d=dayDate(i).getDay(),a;
+    if(d===2){
+      a=[{t:"08:00",n:"3 eggs (breakfast)"}];
+      for(var h=9;h<=19;h++){a.push({t:(h<10?"0":"")+h+":00",n:(h%2?"Apple":"Green tea")})}
+      a.push({t:"20:00",n:"Papaya (dinner)"});
+    }else a=[{t:"08:00",n:"Egg"},{t:"09:00",n:"Apple"},{t:"10:00",n:"Green tea"}];
+    days[key(i)]=a.map(function(x){return{id:id(),t:x.t,n:x.n,d:false}});
+  }
+  return days;
+}
+var days=null,cur=0,edit=false,status="",doc=null,timer=null;
+try{var s=localStorage.getItem("diet-v1");if(s)days=JSON.parse(s)}catch(e){}
+if(!days)days=seed();
+var now=new Date(),diff=Math.round((new Date(now.getFullYear(),now.getMonth(),now.getDate())-START)/864e5);
+if(diff>=0&&diff<N)cur=diff;
+
+function fmt(t){var p=t.split(":"),h=+p[0];return ((h+11)%12+1)+":"+p[1]+" "+(h<12?"AM":"PM")}
+function sorted(a){return a.slice().sort(function(x,y){return x.t<y.t?-1:x.t>y.t?1:0})}
+function save(){
+  try{localStorage.setItem("diet-v1",JSON.stringify(days))}catch(e){}
+  if(!doc)return;
+  setStatus("Saving…");
+  clearTimeout(timer);
+  timer=setTimeout(function(){
+    doc.set({days:days}).then(function(){setStatus("Saved")}).catch(function(){setStatus("Saved on this device only")});
+  },600);
+}
+function setStatus(s){status=s;var e=document.getElementById("st");if(e)e.textContent=s}
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+
+function paint(){
+  var app=document.getElementById("app");app.textContent="";
+  var d=dayDate(cur),list=days[key(cur)]||(days[key(cur)]=[]);
+  var top=el("div","top");
+  var pv=el("button","nav","‹");pv.disabled=cur===0;pv.onclick=function(){go(-1)};
+  var nx=el("button","nav","›");nx.disabled=cur===N-1;nx.onclick=function(){go(1)};
+  var tt=el("div","title");tt.appendChild(el("h1",null,DAYS[d.getDay()]));
+  tt.appendChild(el("p",null,d.getDate()+" "+MON[d.getMonth()]+" "+d.getFullYear()+" · Day "+(cur+1)+" of "+N));
+  top.appendChild(pv);top.appendChild(tt);top.appendChild(nx);app.appendChild(top);
+  var dots=el("div","dots");for(var i=0;i<N;i++)dots.appendChild(el("i",i===cur?"on":""));app.appendChild(dots);
+  var done=list.filter(function(x){return x.d}).length;
+  var pr=el("div","prog"),pb=el("div");pb.style.width=(list.length?done/list.length*100:0)+"%";pr.appendChild(pb);app.appendChild(pr);
+  var m=el("div","meta");m.appendChild(el("span",null,done+" of "+list.length+" done"));m.appendChild(el("span",null,edit?"Editing":"Tap a circle when eaten"));app.appendChild(m);
+  sorted(list).forEach(function(it){
+    var row=el("div","item"+(it.d&&!edit?" done":""));
+    if(edit){
+      var ti=el("input");ti.type="time";ti.value=it.t;ti.onchange=function(){if(ti.value){it.t=ti.value;save();paint()}};
+      var ni=el("input");ni.type="text";ni.value=it.n;ni.oninput=function(){it.n=ni.value;save()};
+      var x=el("button","x","✕");x.setAttribute("aria-label","Delete");x.onclick=function(){days[key(cur)]=list.filter(function(y){return y!==it});save();paint()};
+      row.appendChild(ti);row.appendChild(ni);row.appendChild(x);
+    }else{
+      var c=el("button","chk",it.d?"✓":"");c.setAttribute("aria-label","Mark done");c.onclick=function(){it.d=!it.d;save();paint()};
+      row.appendChild(c);row.appendChild(el("span","t",fmt(it.t)));row.appendChild(el("span","n",it.n));
+    }
+    app.appendChild(row);
+  });
+  var bar=el("div","bar");
+  if(edit){
+    var add=el("button","btn","+ Add item");add.onclick=function(){
+      var l=sorted(list),last=l.length?l[l.length-1].t:"07:00",h=Math.min(23,+last.split(":")[0]+1);
+      list.push({id:id(),t:(h<10?"0":"")+h+":00",n:"",d:false});save();paint();
+      var ins=document.querySelectorAll('.item input[type=text]');var f=ins[ins.length-1];if(f)f.focus();
+    };
+    var dn=el("button","btn p","Done");dn.onclick=function(){edit=false;paint()};
+    bar.appendChild(add);bar.appendChild(dn);
+  }else{
+    var ed=el("button","btn p","✎ Edit this day");ed.onclick=function(){edit=true;paint()};
+    var rs=el("button","btn","Reset ticks");rs.onclick=function(){list.forEach(function(x){x.d=false});save();paint()};
+    bar.appendChild(ed);bar.appendChild(rs);
+  }
+  app.appendChild(bar);
+  var stEl=el("div","st",status);stEl.id="st";app.appendChild(stEl);
+}
+function go(n){var k=cur+n;if(k<0||k>=N)return;cur=k;edit=false;paint();window.scrollTo(0,0)}
+
+var sx=null,sy=null;
+document.addEventListener("touchstart",function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY},{passive:true});
+document.addEventListener("touchend",function(e){
+  if(sx==null||edit)return;var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;sx=null;
+  if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6)go(dx<0?1:-1);
+},{passive:true});
+
+paint();
+
+// Persistent storage via the artifact database (private to the viewer), if available
+(async function(){
+  try{
+    if(!window.claude||!claude.use)return;
+    var user=await claude.use("user"),db=await claude.use("db");
+    if(!user||!db)return;
+    var me=await user.id();
+    var d=db.collection("data/users/"+me).doc("diet");
+    var snap=await Promise.race([d.get(),new Promise(function(_,r){setTimeout(r,10000)})]);
+    if(snap.exists&&snap.data().days){days=snap.data().days;try{localStorage.setItem("diet-v1",JSON.stringify(days))}catch(e){}}
+    doc=d;status=snap.exists?"Synced":"Ready to sync";
+    if(!snap.exists)save();
+    paint();
+  }catch(e){}
+})();
+})();
+</script>
+</body>
+</html>
