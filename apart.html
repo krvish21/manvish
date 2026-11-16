@@ -402,10 +402,36 @@ label {
   font-style: italic;
   opacity: 0.85;
 }
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mute);
+  text-decoration: none;
+  margin-bottom: 14px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.back-btn:hover {
+  color: var(--ink);
+  border-color: var(--love);
+}
+.back-btn:active {
+  transform: scale(0.97);
+}
 </style>
 </head>
 <body>
-<div class="app" id="app"></div>
+<div class="app">
+  <a href="https://manvish.netlify.app/" class="back-btn">← Back to Manvish</a>
+  <div id="app"></div>
+</div>
 <script>
 // ---- Fill these in with your JSONBin.io access key and bin ids ----
 // Or leave them empty and the app will ask for them on first open.

@@ -39,10 +39,16 @@ body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:16px/1.
 .btn{flex:1;padding:13px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600}
 .btn.p{background:var(--acc);border-color:var(--acc);color:#fff}
 .st{text-align:center;color:var(--mute);font-size:12px;margin-top:14px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--mute);text-decoration:none;margin-bottom:14px;padding:6px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);transition:transform .15s ease,color .15s ease}
+.back-btn:hover{color:var(--ink)}
+.back-btn:active{transform:scale(.97)}
 </style>
 </head>
 <body>
-<div class="app" id="app"></div>
+<div class="app">
+  <a href="https://manvish.netlify.app/" class="back-btn">← Back to Manvish</a>
+  <div id="app"></div>
+</div>
 <script>
 (function(){
 var START=new Date(2026,10,16),N=10;
