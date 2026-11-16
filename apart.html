@@ -14,29 +14,36 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-app
 h1{margin:0;font-size:22px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .sub{color:var(--mute);font-size:13px}
-.btn{padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600}
+.btn{padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
 .btn.p{background:var(--a);border-color:var(--a);color:#fff}
 .btn.sm{padding:7px 10px;font-size:13px}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
 .c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
 .c b{display:block;font-size:30px;line-height:1.1}
-.c span{font-size:12px;color:var(--mute)}
+.c span{font-size:12px;color:var(--mute);display:block}
+.c span.hl{font-size:13px;font-weight:700;margin-top:2px;color:var(--ink)}
 .c.a b{color:var(--a)}.c.b b{color:var(--b)}
 .tot{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}
 .tot b{font-size:24px}
+.banner{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:12px 0;display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.4}
+.banner strong{color:var(--ink)}
+.target-bar{display:flex;align-items:center;gap:8px;margin:14px 0 8px;font-size:13px;color:var(--mute)}
+.pill{padding:6px 12px;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
+.pill.active{background:var(--ink);color:var(--card);border-color:var(--ink);font-weight:600}
 .mh{display:flex;align-items:center;justify-content:space-between;margin:6px 0}
 .mh strong{font-size:17px}
-.nav{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px}
+.nav{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;cursor:pointer}
 .g{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .dow{text-align:center;font-size:12px;color:var(--mute);padding:4px 0}
-.d{position:relative;aspect-ratio:1;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px;padding:0}
-.d.empty{border:0;background:none}
+.d{position:relative;aspect-ratio:1;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px;padding:0;cursor:pointer}
+.d.empty{border:0;background:none;cursor:default}
 .d.today{border:2px solid var(--today)}
 .d .dots{position:absolute;bottom:4px;left:0;right:0;display:flex;justify-content:center;gap:3px}
 .d .dots i{width:7px;height:7px;border-radius:50%}
 .i-a{background:var(--a)}.i-b{background:var(--b)}
-.leg{display:flex;gap:14px;font-size:13px;color:var(--mute);margin:10px 0}
-.leg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.leg{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:var(--mute);margin:10px 0}
+.leg span{display:flex;align-items:center}
+.leg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;flex-shrink:0}
 .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}
 .box h2{margin:0 0 8px;font-size:15px}
 input{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%;min-width:0}
@@ -62,7 +69,7 @@ var CONFIG={
 (function(){
 var API="https://api.jsonbin.io/v3/b/";
 var MON=["January","February","March","April","May","June","July","August","September","October","November","December"];
-var cfg=CONFIG,who=null,people=null,data={me:[],wife:[]},status="",err="",screen="main";
+var cfg=CONFIG,who=null,people=null,data={me:[],wife:[]},status="",err="",screen="main",activeTarget=null;
 var view=new Date();view.setDate(1);
 try{
   var sc=JSON.parse(localStorage.getItem("apart-cfg")||"null");
@@ -75,6 +82,10 @@ function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null
 function pad(n){return n<10?"0"+n:""+n}
 function ds(y,m,d){return y+"-"+pad(m+1)+"-"+pad(d)}
 function today(){var n=new Date();return ds(n.getFullYear(),n.getMonth(),n.getDate())}
+function getTarget(){
+  if(activeTarget==="me"||activeTarget==="wife")return activeTarget;
+  return who==="me"?"wife":"me";
+}
 function get(id){
   return fetch(API+id+"/latest",{
     cache:"no-store",
@@ -122,52 +133,106 @@ function load(){
     status="Updated "+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});paint();
   }).catch(function(e){status="";err="Couldn’t reach JSONBin ("+e.message+"). Check your access key and bin IDs.";paint()});
 }
-function saveMine(){
-  var id=who==="me"?cfg.me:cfg.wife;
+function saveTarget(t){
+  if(!t)t=getTarget();
+  var id=t==="me"?cfg.me:cfg.wife;
   status="Saving…";setS();
-  put(id,{owner:people&&people[who]?people[who].id:who,dates:data[who].slice().sort()}).then(function(){status="Saved";setS()}).catch(function(e){status="";err="Save failed ("+e.message+")";paint()});
+  put(id,{owner:people&&people[t]?people[t].id:t,dates:data[t].slice().sort()}).then(function(){status="Saved";setS()}).catch(function(e){status="";err="Save failed ("+e.message+")";paint()});
 }
 function setS(){var e=document.getElementById("st");if(e)e.textContent=status}
 
 function stretches(a){var s=a.slice().sort(),n=0,prev=null;s.forEach(function(d){var t=Date.parse(d+"T00:00:00Z");if(prev===null||t-prev>864e5)n++;prev=t});return n}
 function union(){var o={};data.me.concat(data.wife).forEach(function(d){o[d]=1});return Object.keys(o).length}
-function toggle(d){var a=data[who],i=a.indexOf(d);if(i>-1)a.splice(i,1);else a.push(d);saveMine();paint()}
-function addRange(f,t){
-  if(!f||!t)return;if(f>t){var x=f;f=t;t=x}
-  var a=Date.parse(f+"T00:00:00Z"),b=Date.parse(t+"T00:00:00Z"),n=0;
-  for(var ms=a;ms<=b&&n<800;ms+=864e5,n++){var d=new Date(ms).toISOString().slice(0,10);if(data[who].indexOf(d)<0)data[who].push(d)}
-  saveMine();paint();
+function toggle(d){var tg=getTarget();var a=data[tg],i=a.indexOf(d);if(i>-1)a.splice(i,1);else a.push(d);saveTarget(tg);paint()}
+function addRange(f,to){
+  if(!f||!to)return;if(f>to){var x=f;f=to;to=x}
+  var tg=getTarget();
+  var a=Date.parse(f+"T00:00:00Z"),b=Date.parse(to+"T00:00:00Z"),n=0;
+  for(var ms=a;ms<=b&&n<800;ms+=864e5,n++){var d=new Date(ms).toISOString().slice(0,10);if(data[tg].indexOf(d)<0)data[tg].push(d)}
+  saveTarget(tg);paint();
 }
-function removeRange(f,t){
-  if(!f||!t)return;if(f>t){var x=f;f=t;t=x}
-  data[who]=data[who].filter(function(d){return d<f||d>t});saveMine();paint();
+function removeRange(f,to){
+  if(!f||!to)return;if(f>to){var x=f;f=to;to=x}
+  var tg=getTarget();
+  data[tg]=data[tg].filter(function(d){return d<f||d>to});saveTarget(tg);paint();
 }
 
 function paint(){
   var app=document.getElementById("app");app.textContent="";
   if(screen==="setup")return setup(app);
   if(!who||!people||(who!=="me"&&who!=="wife")){
-    if(!people){app.appendChild(el("h1",null,"Days Apart"));app.appendChild(el("p","sub",status||"Loading…"));if(err){app.appendChild(el("p","err",err));var rs=el("button","btn","Change bin settings");rs.onclick=function(){screen="setup";paint()};app.appendChild(rs)}return}
+    if(!people){app.appendChild(el("h1",null,"Days Apart 💕"));app.appendChild(el("p","sub",status||"Loading…"));if(err){app.appendChild(el("p","err",err));var rs=el("button","btn","Change bin settings");rs.onclick=function(){screen="setup";paint()};app.appendChild(rs)}return}
     app.appendChild(el("h1",null,"Who are you?"));
-    var w=el("div","who");["me","wife"].forEach(function(k){var b=el("button","btn p",name(k));b.onclick=function(){who=k;try{localStorage.setItem("apart-who",k)}catch(e){}paint()};w.appendChild(b)});
+    app.appendChild(el("p","sub","Select who is signing in to mark the other away:"));
+    var w=el("div","who");
+    [["me","wife"],["wife","me"]].forEach(function(p){
+      var b=el("button","btn p",name(p[0])+" (marks "+name(p[1])+" away)");
+      b.onclick=function(){who=p[0];activeTarget=null;try{localStorage.setItem("apart-who",p[0])}catch(e){}paint()};
+      w.appendChild(b);
+    });
     app.appendChild(w);return;
   }
+  var tg=getTarget();
   var other=who==="me"?"wife":"me";
-  var hd=el("div","row");var t=el("div");t.appendChild(el("h1",null,"Days Apart"));t.appendChild(el("div","sub","Signed in as "+name(who)));hd.appendChild(t);
+  var hd=el("div","row");var t=el("div");
+  t.appendChild(el("h1",null,"Days Apart 💕"));
+  t.appendChild(el("div","sub","Signed in as "+name(who)+" · Marking "+name(tg)+" away"));
+  hd.appendChild(t);
   var bs=el("div");bs.style.display="flex";bs.style.gap="6px";
   var rf=el("button","btn sm","↻");rf.setAttribute("aria-label","Refresh");rf.onclick=load;
-  var sw=el("button","btn sm","Switch");sw.onclick=function(){who=null;try{localStorage.removeItem("apart-who")}catch(e){}paint()};
+  var sw=el("button","btn sm","Switch");sw.onclick=function(){who=null;activeTarget=null;try{localStorage.removeItem("apart-who")}catch(e){}paint()};
   var st=el("button","btn sm","⚙");st.setAttribute("aria-label","Settings");st.onclick=function(){screen="setup";paint()};
   bs.appendChild(rf);bs.appendChild(sw);bs.appendChild(st);hd.appendChild(bs);app.appendChild(hd);
   if(err)app.appendChild(el("p","err",err));
 
+  var v=data.me.length,s=data.wife.length;
+  var bn=el("div","banner");
+  var bi=el("span",null,"💌");bi.style.fontSize="20px";bn.appendChild(bi);
+  var bt=el("div");
+  if(v>s){
+    var d=v-s;
+    bt.innerHTML="<strong>"+name("wife")+"</strong> has stayed without <strong>"+name("me")+"</strong> for <strong>"+d+" more day"+(d===1?"":"s")+"</strong>.";
+  }else if(s>v){
+    var d=s-v;
+    bt.innerHTML="<strong>"+name("me")+"</strong> has stayed without <strong>"+name("wife")+"</strong> for <strong>"+d+" more day"+(d===1?"":"s")+"</strong>.";
+  }else if(v>0){
+    bt.innerHTML="You both have stayed without each other for the <strong>exact same duration</strong> ("+v+" days each).";
+  }else{
+    bt.innerHTML="No days apart logged yet — <strong>always together</strong> 💕";
+  }
+  bn.appendChild(bt);
+  app.appendChild(bn);
+
   var cards=el("div","cards");
-  [["me","a"],["wife","b"]].forEach(function(p){
-    var c=el("div","c "+p[1]);c.appendChild(el("b",null,data[p[0]].length));
-    c.appendChild(el("span",null,name(p[0])+"’s days away · "+stretches(data[p[0]])+" stretch"+(stretches(data[p[0]])===1?"":"es")));cards.appendChild(c);
-  });
-  var tot=el("div","c tot");var l=el("span",null,"Total days with at least one of you away");tot.appendChild(l);tot.appendChild(el("b",null,union()));cards.appendChild(tot);
+  var c1=el("div","c a");
+  c1.appendChild(el("b",null,data.me.length));
+  c1.appendChild(el("span","hl",name("wife")+" without "+name("me")));
+  c1.appendChild(el("span",null,name("me")+" was away · "+stretches(data.me)+" stretch"+(stretches(data.me)===1?"":"es")));
+  cards.appendChild(c1);
+
+  var c2=el("div","c b");
+  c2.appendChild(el("b",null,data.wife.length));
+  c2.appendChild(el("span","hl",name("me")+" without "+name("wife")));
+  c2.appendChild(el("span",null,name("wife")+" was away · "+stretches(data.wife)+" stretch"+(stretches(data.wife)===1?"":"es")));
+  cards.appendChild(c2);
+
+  var tot=el("div","c tot");
+  var tl=el("div");
+  tl.appendChild(el("span","hl","Total Days Apart"));
+  tl.appendChild(el("span",null,"Days with at least one of you away"));
+  tot.appendChild(tl);
+  tot.appendChild(el("b",null,union()));
+  cards.appendChild(tot);
   app.appendChild(cards);
+
+  var tb=el("div","target-bar");
+  tb.appendChild(el("span",null,"Currently marking:"));
+  [["wife",name("wife")+" away"],["me",name("me")+" away"]].forEach(function(item){
+    var p=el("button","pill"+(tg===item[0]?" active":""),item[1]);
+    p.onclick=function(){activeTarget=item[0];paint()};
+    tb.appendChild(p);
+  });
+  app.appendChild(tb);
 
   var mh=el("div","mh");
   var pv=el("button","nav","‹");pv.onclick=function(){view.setMonth(view.getMonth()-1);paint()};
@@ -184,18 +249,20 @@ function paint(){
   })(d)}
   app.appendChild(g);
   var lg=el("div","leg");
-  [["me","i-a"],["wife","i-b"]].forEach(function(p){var s=el("span");s.appendChild(el("i",p[1]));s.appendChild(document.createTextNode(name(p[0])));lg.appendChild(s)});
+  var l1=el("span");l1.appendChild(el("i","i-a"));l1.appendChild(document.createTextNode(name("wife")+" without "+name("me")+" ("+name("me")+" away)"));
+  var l2=el("span");l2.appendChild(el("i","i-b"));l2.appendChild(document.createTextNode(name("me")+" without "+name("wife")+" ("+name("wife")+" away)"));
+  lg.appendChild(l1);lg.appendChild(l2);
   app.appendChild(lg);
-  app.appendChild(el("p","sub","Tap a day to mark or unmark it on "+name(who)+"’s calendar."));
+  app.appendChild(el("p","sub","Tap a day to mark or unmark when "+name(tg)+" was away from you."));
 
-  var bx=el("div","box");bx.appendChild(el("h2",null,"Add or remove a range"));
+  var bx=el("div","box");bx.appendChild(el("h2",null,"Add or remove a range for "+name(tg)));
   var two=el("div","two"),fa=el("div"),ta=el("div");
   fa.appendChild(el("label",null,"From"));var fi=el("input");fi.type="date";fa.appendChild(fi);
   ta.appendChild(el("label",null,"To"));var ti=el("input");ti.type="date";ta.appendChild(ti);
   two.appendChild(fa);two.appendChild(ta);bx.appendChild(two);
   var br=el("div","two");br.style.marginTop="10px";
-  var ad=el("button","btn p","Mark away");ad.onclick=function(){addRange(fi.value,ti.value)};
-  var rm=el("button","btn","Unmark");rm.onclick=function(){removeRange(fi.value,ti.value)};
+  var ad=el("button","btn p","Mark "+name(tg)+" away");ad.onclick=function(){addRange(fi.value,ti.value)};
+  var rm=el("button","btn","Unmark "+name(tg));rm.onclick=function(){removeRange(fi.value,ti.value)};
   br.appendChild(ad);br.appendChild(rm);bx.appendChild(br);app.appendChild(bx);
   var s=el("div","st",status);s.id="st";app.appendChild(s);
 }
