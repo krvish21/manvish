@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Days Together 💕 Vishu & Sabaa</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
+<style>
+:root {
+  --bg: #fff5f7;
+  --card: #ffffff;
+  --ink: #361b24;
+  --mute: #99717e;
+  --line: #fae0e6;
+  --line-strong: #f3c7d2;
+  --love: #ff3366;
+  --love-gradient: linear-gradient(135deg, #ff4d6d, #e63974);
+  --gold: #d4a373;
+  --shadow: 0 4px 24px rgba(220, 70, 110, 0.08);
+  padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #160c11;
+    --card: #23131b;
+    --ink: #faedf1;
+    --mute: #b8919f;
+    --line: #3b212f;
+    --line-strong: #542f42;
+    --love: #ff527b;
+    --love-gradient: linear-gradient(135deg, #ff6599, #e63974);
+    --gold: #e9c46a;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+.app {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 18px 16px 48px;
+  position: relative;
+  z-index: 2;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mute);
+  text-decoration: none;
+  margin-bottom: 14px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.back-btn:hover {
+  color: var(--ink);
+  border-color: var(--love);
+}
+.back-btn:active {
+  transform: scale(0.97);
+}
+
+/* Couple Header */
+.couple-header {
+  text-align: center;
+  margin: 10px 0 20px;
+}
+.couple-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+}
+.avatar-tag {
+  font-size: 15px;
+  font-weight: 700;
+}
+.pulse-heart {
+  color: var(--love);
+  font-size: 18px;
+  animation: pulse 1.6s infinite ease-in-out;
+  display: inline-block;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+h1 {
+  margin: 4px 0 2px;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+}
+.subtitle {
+  color: var(--mute);
+  font-size: 13px;
+}
+.meeting-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--mute);
+  background: rgba(255, 77, 109, 0.08);
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* Hero Live Counter Card */
+.hero-card {
+  background: var(--card);
+  border: 1px solid var(--line-strong);
+  border-radius: 24px;
+  padding: 24px 18px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--love-gradient);
+}
+.hero-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--love);
+  margin-bottom: 12px;
+}
+.live-clock-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.clock-unit {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 10px 4px;
+}
+.clock-num {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+}
+.clock-lbl {
+  font-size: 11px;
+  color: var(--mute);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.breakdown-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: rgba(255, 77, 109, 0.06);
+  border-radius: 12px;
+  display: inline-block;
+}
+
+/* Secondary Metrics */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.metric-box {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 12px 8px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.metric-icon {
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+.metric-val {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.metric-lbl {
+  font-size: 11px;
+  color: var(--mute);
+}
+
+/* Anniversary Celebration Banner */
+.anniversary-card {
+  background: var(--card);
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  position: relative;
+}
+.anniversary-card.is-today {
+  border-color: var(--love);
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.1), rgba(230, 57, 116, 0.05));
+  animation: borderGlow 2s infinite alternate;
+}
+@keyframes borderGlow {
+  0% { box-shadow: 0 0 10px rgba(255, 77, 109, 0.2); }
+  100% { box-shadow: 0 0 24px rgba(255, 77, 109, 0.45); }
+}
+.ann-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.ann-body {
+  font-size: 13px;
+  color: var(--mute);
+  line-height: 1.45;
+}
+.ann-countdown {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--love);
+  margin-top: 8px;
+}
+
+/* Milestones Progress */
+.milestone-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+.milestone-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.progress-bar-wrap {
+  height: 8px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--love-gradient);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+.milestone-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--mute);
+}
+
+/* Timeline */
+.timeline-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 18px 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+.timeline-card h2 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  padding-left: 20px;
+}
+.timeline-list::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--line-strong);
+}
+.timeline-item {
+  position: relative;
+  font-size: 13px;
+}
+.timeline-dot {
+  position: absolute;
+  left: -20px;
+  top: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 3px solid var(--love);
+}
+.timeline-dot.future {
+  border-color: var(--mute);
+  opacity: 0.6;
+}
+.timeline-date {
+  font-weight: 700;
+  color: var(--ink);
+}
+.timeline-desc {
+  color: var(--mute);
+  font-size: 12px;
+}
+
+/* Action Love Button */
+.love-btn-wrap {
+  text-align: center;
+  margin: 20px 0;
+}
+.btn-love {
+  padding: 14px 28px;
+  border-radius: 30px;
+  border: 0;
+  background: var(--love-gradient);
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(230, 57, 116, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-love:active {
+  transform: scale(0.96);
+}
+.love-quote-popup {
+  margin-top: 12px;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--mute);
+  min-height: 24px;
+  transition: opacity 0.3s ease;
+}
+
+/* Footer Quote */
+.footer-quote {
+  text-align: center;
+  font-size: 12px;
+  color: var(--mute);
+  margin-top: 24px;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* Floating Hearts & Canvas */
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
+.floating-heart {
+  position: fixed;
+  pointer-events: none;
+  font-size: 20px;
+  animation: floatUp 2.4s ease-out forwards;
+  z-index: 1000;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(0.8); opacity: 1; }
+  100% { transform: translateY(-160px) scale(1.4); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+
+<div class="app">
+  <a href="https://manvish.netlify.app/" class="back-btn">← Back to Manvish</a>
+
+  <div class="couple-header">
+    <div class="couple-tag">
+      <span class="avatar-tag">👨🏻 Vishu</span>
+      <span class="pulse-heart">❤️</span>
+      <span class="avatar-tag">Sabaa 👩🏻</span>
+    </div>
+    <h1>Forever Together 💕</h1>
+    <div class="subtitle">Counting every beautiful second of our love story</div>
+    <div class="meeting-badge">
+      <span>✨ First met: July 3, 2024 at 07:58:00 AM</span>
+    </div>
+  </div>
+
+  <!-- Hero Live Timer -->
+  <div class="hero-card">
+    <div class="hero-label">We have been together for</div>
+    <div class="live-clock-grid">
+      <div class="clock-unit">
+        <div class="clock-num" id="d-days">0</div>
+        <div class="clock-lbl">Days</div>
+      </div>
+      <div class="clock-unit">
+        <div class="clock-num" id="d-hours">0</div>
+        <div class="clock-lbl">Hours</div>
+      </div>
+      <div class="clock-unit">
+        <div class="clock-num" id="d-mins">0</div>
+        <div class="clock-lbl">Minutes</div>
+      </div>
+      <div class="clock-unit">
+        <div class="clock-num" id="d-secs">0</div>
+        <div class="clock-lbl">Seconds</div>
+      </div>
+    </div>
+    <div class="breakdown-text" id="breakdown-summary">
+      Calculating our journey…
+    </div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="metrics-row">
+    <div class="metric-box">
+      <div class="metric-icon">⏳</div>
+      <div class="metric-val" id="total-hours">--</div>
+      <div class="metric-lbl">Total Hours</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-icon">💓</div>
+      <div class="metric-val" id="total-heartbeats">--</div>
+      <div class="metric-lbl">Heartbeats</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-icon">🌙</div>
+      <div class="metric-val" id="total-nights">--</div>
+      <div class="metric-lbl">Nights Known</div>
+    </div>
+  </div>
+
+  <!-- Anniversary Banner -->
+  <div class="anniversary-card" id="anniversary-banner">
+    <div class="ann-header">
+      <span style="font-size:22px">💍</span>
+      <span id="ann-title">Celebrating Us</span>
+    </div>
+    <div class="ann-body" id="ann-desc">
+      Every anniversary is a testament to the vows written in our hearts.
+    </div>
+    <div class="ann-countdown" id="ann-countdown"></div>
+  </div>
+
+  <!-- Milestone Progress (Towards 1000 days or 900 days) -->
+  <div class="milestone-card" id="milestone-card">
+    <div class="milestone-title">
+      <span id="ms-next-title">Road to 900 Days Together 🌟</span>
+      <span id="ms-days-left" style="color:var(--love)">-- days left</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="ms-progress-bar" style="width: 0%"></div>
+    </div>
+    <div class="milestone-sub">
+      <span id="ms-start-lbl">800 days</span>
+      <span id="ms-target-lbl">900 days</span>
+    </div>
+  </div>
+
+  <!-- Love Button -->
+  <div class="love-btn-wrap">
+    <button class="btn-love" id="btn-love">
+      <span>Celebrate Our Love</span>
+      <span>🥂💖</span>
+    </button>
+    <div class="love-quote-popup" id="love-quote">
+      "Meeting you at 7:58 AM on July 3 was the sweetest moment of my life."
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline-card">
+    <h2><span>📜</span> Our Milestone Journey</h2>
+    <div class="timeline-list">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">July 3, 2024 · 07:58 AM</div>
+        <div class="timeline-desc">When Vishu and Sabaa first met & the universe aligned ✨</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">October 11, 2024</div>
+        <div class="timeline-desc">100 Days Together 💕</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">July 3, 2025</div>
+        <div class="timeline-desc">1 Year Anniversary 🎂🥂</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">November 15, 2025</div>
+        <div class="timeline-desc">500 Days of Us 🌟</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">July 3, 2026</div>
+        <div class="timeline-desc">2 Year Anniversary 💍🥂</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot future"></div>
+        <div class="timeline-date">December 20, 2026 (Upcoming)</div>
+        <div class="timeline-desc">900 Days of Love 💫</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot future"></div>
+        <div class="timeline-date">March 30, 2027 (Upcoming)</div>
+        <div class="timeline-desc">1,000 Days Milestone 🏆💖</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot future"></div>
+        <div class="timeline-date">July 3, 2027 (Upcoming)</div>
+        <div class="timeline-desc">3 Year Anniversary 🥂✨</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-quote">
+    "Whatever our souls are made of, his and mine are the same." 💕<br>
+    From July 3, 2024 to eternity.
+  </div>
+</div>
+
+<script>
+// The moment Vishu and Sabaa met: July 3, 2024, 07:58:00 AM
+var START = new Date(2024, 6, 3, 7, 58, 0);
+
+var LOVE_QUOTES = [
+  "Meeting you at 7:58 AM on July 3 was the sweetest moment of my life.",
+  "I loved you yesterday, I love you still, I always have, I always will.",
+  "You are my today and all of my tomorrows.",
+  "Every single second with you is my favorite memory.",
+  "Distance and time only make our love grow deeper and stronger.",
+  "You're the peace I searched for in a chaotic world.",
+  "866+ days down, a lifetime together to go.",
+  "Home is not a place, Sabaa, it is you."
+];
+
+function updateCounter() {
+  var now = new Date();
+  var diffMs = now - START;
+  if (diffMs < 0) diffMs = 0;
+
+  var totalSeconds = Math.floor(diffMs / 1000);
+  var totalMinutes = Math.floor(totalSeconds / 60);
+  var totalHours = Math.floor(totalMinutes / 60);
+  var totalDays = Math.floor(totalHours / 24);
+
+  var s = totalSeconds % 60;
+  var m = totalMinutes % 60;
+  var h = totalHours % 24;
+
+  // DOM elements
+  document.getElementById("d-days").textContent = totalDays;
+  document.getElementById("d-hours").textContent = (h < 10 ? "0" : "") + h;
+  document.getElementById("d-mins").textContent = (m < 10 ? "0" : "") + m;
+  document.getElementById("d-secs").textContent = (s < 10 ? "0" : "") + s;
+
+  // Secondary metrics
+  document.getElementById("total-hours").textContent = totalHours.toLocaleString();
+  var beats = (totalMinutes * 72); // ~72 bpm average heartbeats
+  var beatsStr = beats >= 1e6 ? (beats / 1e6).toFixed(1) + "M" : beats.toLocaleString();
+  document.getElementById("total-heartbeats").textContent = beatsStr;
+  document.getElementById("total-nights").textContent = totalDays.toLocaleString();
+
+  // Calendar breakdown (Years, Months, Days)
+  var y = now.getFullYear() - START.getFullYear();
+  var mo = now.getMonth() - START.getMonth();
+  var d = now.getDate() - START.getDate();
+  if (d < 0) {
+    mo--;
+    var prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    d += prevMonthDays;
+  }
+  if (mo < 0) {
+    y--;
+    mo += 12;
+  }
+
+  var parts = [];
+  if (y > 0) parts.push(y + " Year" + (y === 1 ? "" : "s"));
+  if (mo > 0) parts.push(mo + " Month" + (mo === 1 ? "" : "s"));
+  parts.push(d + " Day" + (d === 1 ? "" : "s"));
+  parts.push((h < 10 ? "0" : "") + h + "h " + (m < 10 ? "0" : "") + m + "m " + (s < 10 ? "0" : "") + s + "s");
+
+  document.getElementById("breakdown-summary").textContent = parts.join(" · ");
+
+  updateAnniversaries(now, totalDays);
+  updateMilestones(totalDays);
+}
+
+function updateAnniversaries(now, totalDays) {
+  var isYearlyAnniversary = (now.getMonth() === 6 && now.getDate() === 3); // July 3
+  var isMonthlyAnniversary = (now.getDate() === 3); // 3rd of month
+
+  var banner = document.getElementById("anniversary-banner");
+  var title = document.getElementById("ann-title");
+  var desc = document.getElementById("ann-desc");
+  var cdown = document.getElementById("ann-countdown");
+
+  // Calculate next yearly anniversary
+  var nextAnnYear = now.getFullYear();
+  if (now.getMonth() > 6 || (now.getMonth() === 6 && now.getDate() > 3)) {
+    nextAnnYear++;
+  }
+  var nextAnnDate = new Date(nextAnnYear, 6, 3, 7, 58, 0);
+  var daysToNextYear = Math.ceil((nextAnnDate - now) / 864e5);
+  var nextYearOrdinal = (nextAnnYear - START.getFullYear());
+
+  // Calculate next monthversary
+  var nextMoMonth = now.getMonth();
+  var nextMoYear = now.getFullYear();
+  if (now.getDate() >= 3) {
+    nextMoMonth++;
+    if (nextMoMonth > 11) {
+      nextMoMonth = 0;
+      nextMoYear++;
+    }
+  }
+  var nextMonthDate = new Date(nextMoYear, nextMoMonth, 3, 7, 58, 0);
+  var daysToNextMonth = Math.ceil((nextMonthDate - now) / 864e5);
+  var totalMonthsPassed = (now.getFullYear() - START.getFullYear()) * 12 + (now.getMonth() - START.getMonth());
+
+  if (isYearlyAnniversary) {
+    banner.classList.add("is-today");
+    title.textContent = "🎉 HAPPY ANNIVERSARY! 🥂🍾";
+    var yearsPassed = now.getFullYear() - START.getFullYear();
+    desc.textContent = "Today marks " + yearsPassed + " incredible year" + (yearsPassed === 1 ? "" : "s") + " since Vishu and Sabaa met. You are each other's greatest blessing! ❤️";
+    cdown.textContent = "Celebration Day! Toast to endless love! 🥂✨";
+  } else if (isMonthlyAnniversary) {
+    banner.classList.add("is-today");
+    title.textContent = "🥂 Happy Monthversary! 💕";
+    desc.textContent = "Today marks month #" + totalMonthsPassed + " together! Every 3rd of the month is a tribute to our first meeting.";
+    cdown.textContent = "Cherish today! Another month stronger together ❤️";
+  } else {
+    banner.classList.remove("is-today");
+    title.textContent = "Next Anniversary 💍";
+    desc.textContent = "Counting down to our " + nextYearOrdinal + " Year Anniversary on July 3, " + nextAnnYear + ".";
+    cdown.textContent = "⏳ " + daysToNextYear + " days until our " + nextYearOrdinal + " Year Anniversary · " + daysToNextMonth + " days until next Monthversary (#" + (totalMonthsPassed + 1) + ") 💕";
+  }
+}
+
+function updateMilestones(totalDays) {
+  var prevTarget = 800;
+  var nextTarget = 900;
+  if (totalDays >= 900 && totalDays < 1000) {
+    prevTarget = 900;
+    nextTarget = 1000;
+  } else if (totalDays >= 1000) {
+    prevTarget = 1000;
+    nextTarget = 1500;
+  }
+
+  var progress = Math.min(100, Math.max(0, ((totalDays - prevTarget) / (nextTarget - prevTarget)) * 100));
+  var daysLeft = nextTarget - totalDays;
+
+  document.getElementById("ms-next-title").textContent = "Road to " + nextTarget + " Days Together 🌟";
+  document.getElementById("ms-days-left").textContent = (daysLeft > 0 ? daysLeft + " days remaining" : "Milestone reached! 🎉");
+  document.getElementById("ms-progress-bar").style.width = progress + "%";
+  document.getElementById("ms-start-lbl").textContent = prevTarget + " days";
+  document.getElementById("ms-target-lbl").textContent = nextTarget + " days";
+}
+
+// Interactive Love celebration
+var quoteIndex = 0;
+document.getElementById("btn-love").addEventListener("click", function(e) {
+  triggerCelebration(e.clientX, e.clientY);
+  quoteIndex = (quoteIndex + 1) % LOVE_QUOTES.length;
+  var qEl = document.getElementById("love-quote");
+  qEl.style.opacity = 0;
+  setTimeout(function() {
+    qEl.textContent = "\"" + LOVE_QUOTES[quoteIndex] + "\"";
+    qEl.style.opacity = 1;
+  }, 200);
+});
+
+function triggerCelebration(x, y) {
+  spawnHearts(x, y);
+  fireConfetti();
+}
+
+function spawnHearts(x, y) {
+  var count = 8;
+  var symbols = ["💖", "💕", "❤️", "🥰", "✨", "💍"];
+  for (var i = 0; i < count; i++) {
+    var h = document.createElement("div");
+    h.className = "floating-heart";
+    h.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    h.style.left = (x || (window.innerWidth / 2) + (Math.random() * 80 - 40)) + "px";
+    h.style.top = (y || (window.innerHeight / 2) + (Math.random() * 80 - 40)) + "px";
+    document.body.appendChild(h);
+    (function(el) {
+      setTimeout(function() {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      }, 2400);
+    })(h);
+  }
+}
+
+// Lightweight Confetti
+var canvas = document.getElementById("confetti-canvas");
+var ctx = canvas.getContext("2d");
+var particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function fireConfetti() {
+  var colors = ["#ff4d6d", "#e63974", "#d4a373", "#ffb3c1", "#ff758f", "#ffd166"];
+  for (var i = 0; i < 60; i++) {
+    particles.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2 + 50,
+      vx: (Math.random() - 0.5) * 12,
+      vy: -Math.random() * 12 - 4,
+      size: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 1,
+      rotation: Math.random() * 360,
+      vRot: (Math.random() - 0.5) * 8
+    });
+  }
+}
+
+function renderConfetti() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (var i = particles.length - 1; i >= 0; i--) {
+    var p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.35; // gravity
+    p.rotation += p.vRot;
+    p.alpha -= 0.015;
+
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, p.alpha);
+    ctx.translate(p.x, p.y);
+    ctx.rotate((p.rotation * Math.PI) / 180);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+    ctx.restore();
+
+    if (p.alpha <= 0 || p.y > canvas.height) {
+      particles.splice(i, 1);
+    }
+  }
+  requestAnimationFrame(renderConfetti);
+}
+renderConfetti();
+
+updateCounter();
+setInterval(updateCounter, 1000);
+</script>
+</body>
+</html>
