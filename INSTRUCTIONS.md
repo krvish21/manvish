@@ -95,7 +95,9 @@ When connected to the VM (`ubuntu@144.24.127.21`):
 | **Restart the bot** | `pm2 restart manvish-bot` |
 | **Stop the bot** | `pm2 stop manvish-bot` |
 | **Start the bot** | `pm2 start ~/manvish/whatsapp-scheduler/scheduler.js --name "manvish-bot"` |
-| **Trigger send immediately** | `cd ~/manvish/whatsapp-scheduler && npm run send-now` |
+| **Send now (Default recipient)** | `cd ~/manvish/whatsapp-scheduler && npm run send-now` |
+| **Test send to a specific number** | `cd ~/manvish/whatsapp-scheduler && node scheduler.js --now --to 91XXXXXXXXXX` |
+| **Preview letter without sending** | `cd ~/manvish/whatsapp-scheduler && npm run test-letter` |
 
 ---
 
@@ -121,6 +123,9 @@ GEMINI_API_KEY=your_gemini_api_key
 
 # Recipient WhatsApp Number (Country code + number, NO '+' or spaces)
 RECIPIENT_PHONE_NUMBER=918847473055
+
+# Optional test phone number for manual tests (e.g. your own number)
+TEST_RECIPIENT_NUMBER=
 
 # Daily Send Time in 24-hour HH:MM format (Asia/Kolkata timezone)
 SEND_TIME=08:00
