@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eighty-Seven Hundred Reasons and Counting 💕 Vishu & Sabaa</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+<style>
+:root {
+  --bg: #fff5f7;
+  --card: #ffffff;
+  --ink: #381a24;
+  --mute: #99707e;
+  --line: #fae0e6;
+  --line-strong: #f3c7d2;
+  --love: #ff3366;
+  --love-gradient: linear-gradient(135deg, #ff4d6d, #e63974);
+  --shadow: 0 4px 24px rgba(220, 70, 110, 0.08);
+  padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #160c11;
+    --card: #23131b;
+    --ink: #faedf1;
+    --mute: #b8919f;
+    --line: #3b212f;
+    --line-strong: #542f42;
+    --love: #ff527b;
+    --love-gradient: linear-gradient(135deg, #ff6599, #e63974);
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
+}
+.app {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 18px 16px 48px;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mute);
+  text-decoration: none;
+  margin-bottom: 14px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.header-box {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.date-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--love);
+  background: rgba(255, 77, 109, 0.08);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+h1 {
+  margin: 4px 0 6px;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.subtitle {
+  font-size: 13px;
+  color: var(--mute);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 20px 18px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+.card-highlight {
+  border-color: var(--line-strong);
+  position: relative;
+  overflow: hidden;
+}
+.card-highlight::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--love-gradient);
+}
+.verse-box {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.8;
+  text-align: center;
+  color: var(--ink);
+  white-space: pre-line;
+  padding: 10px 0;
+}
+.letter-content {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink);
+  white-space: pre-line;
+}
+.letter-content p {
+  margin: 0 0 14px;
+}
+.section-title {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.reasons-list {
+  padding-left: 20px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.reasons-list li {
+  margin-bottom: 8px;
+}
+.question-box {
+  background: rgba(255, 77, 109, 0.06);
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 14px;
+  font-style: italic;
+  text-align: center;
+}
+.stat-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px 16px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.stat-pill b {
+  color: var(--love);
+}
+.floating-hearts-btn {
+  text-align: center;
+  margin: 24px 0 16px;
+}
+.btn-heart {
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: 0;
+  background: var(--love-gradient);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(230, 57, 116, 0.3);
+}
+footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--mute);
+  margin-top: 24px;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <a href="https://manvish.netlify.app/" class="back-btn">← Back to Manvish</a>
+
+  <div class="header-box">
+    <div class="date-tag">💌 Monday, 23 November 2026</div>
+    <h1>Eighty-Seven Hundred Reasons and Counting</h1>
+    <div class="subtitle">From Vishu to Sabaa · Day 873 of Our Love</div>
+  </div>
+
+  <div class="stat-pill">
+    <span>Days we have been together</span>
+    <b>873 Days (2y 4m 20d) 💕</b>
+  </div>
+
+  <div class="card card-highlight">
+    <div class="verse-box">
+Since July painted morning in your eyes,
+Eighty-seven hundred hours have learned your grace.
+Time is no longer a measure of passing skies,
+But the gentle distance between my heart and your face.
+Every beat since then whispers your sweet name,
+And nothing in this world will ever be the same.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title"><span>✍️</span> A Letter Just For You</div>
+    <div class="letter-content">
+My dearest Sabaa, looking back across the 873 days we've shared since that quiet July morning, I am struck by how completely you have become my home. You didn't just walk into my life; you brought a steady, beautiful warmth that turned ordinary days into moments I want to hold onto forever. Your laughter is the sound I didn't know I was waiting for, and your presence is the peace I never knew I needed.
+
+Every single day with you feels like an unfolding gift. Whether we are sharing quiet glances across a crowded room or just resting in the comforting silence of each other's company, you make the world feel softer, kinder, and infinitely more vibrant. You are the thought that begins my mornings and the gentle prayer that closes my eyes at night.
+
+Thank you for loving me, for trusting me with your heart, and for making this journey of life the greatest adventure of my existence. No matter how many days we add to our story, my favorite place in the entire universe will always be right beside you. I love you, today and for all the days yet unwritten.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title"><span>💖</span> 3 Reasons I Love You Today</div>
+    <ul class="reasons-list">
+      <li>The way your eyes light up when you talk about something that genuinely excites your soul.</li>
+      <li>How effortlessly you bring peace and clarity to even my most chaotic days.</li>
+      <li>The little, unspoken language we share that makes us feel like the only two people in the world.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="section-title"><span>🌙</span> For Us Tonight</div>
+    <div class="question-box">
+      "If we could instantly teleport to anywhere in the world for just one quiet evening together tonight, where would your heart take us?"
+    </div>
+  </div>
+
+  <div class="floating-hearts-btn">
+    <button class="btn-heart" onclick="celebrate()">Tap to Send Love 💕</button>
+  </div>
+
+  <footer>
+    Written with all my heart for you, Sabaa.<br>
+    Since July 3, 2024 to infinity.
+  </footer>
+</div>
+
+<script>
+function celebrate() {
+  for (let i = 0; i < 8; i++) {
+    const h = document.createElement("div");
+    h.textContent = ["💖", "💕", "❤️", "🥰", "✨"][Math.floor(Math.random() * 5)];
+    h.style.position = "fixed";
+    h.style.left = (window.innerWidth / 2 + (Math.random() * 120 - 60)) + "px";
+    h.style.top = (window.innerHeight / 2 + (Math.random() * 120 - 60)) + "px";
+    h.style.fontSize = "24px";
+    h.style.pointerEvents = "none";
+    h.style.transition = "transform 2s ease-out, opacity 2s ease-out";
+    document.body.appendChild(h);
+    setTimeout(() => {
+      h.style.transform = "translateY(-140px) scale(1.5)";
+      h.style.opacity = "0";
+    }, 20);
+    setTimeout(() => h.remove(), 2100);
+  }
+}
+</script>
+</body>
+</html>
