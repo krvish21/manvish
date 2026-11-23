@@ -122,10 +122,10 @@ Located on the VM at: `~/manvish/whatsapp-scheduler/.env`
 GEMINI_API_KEY=your_gemini_api_key
 
 # Recipient WhatsApp Number (Country code + number, NO '+' or spaces)
-RECIPIENT_PHONE_NUMBER=918847473055
+RECIPIENT_PHONE_NUMBER=91XXXXXXXXXX
 
 # Optional test phone number for manual tests (e.g. your own number)
-TEST_RECIPIENT_NUMBER=
+TEST_RECIPIENT_NUMBER=91YYYYYYYYYY
 
 # Daily Send Time in 24-hour HH:MM format (Asia/Kolkata timezone)
 SEND_TIME=08:00
