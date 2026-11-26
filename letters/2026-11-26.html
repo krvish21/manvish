@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Day 876 · Sabaa & Vishu</title>
+<title>Day 876 · Vishwajeet & Vishu</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,15 +129,9 @@ body {
 .signature {
   margin-top: 24px;
   font-size: 14px;
-  font-style: italic;
   opacity: 0.85;
 }
-.signature b {
-  color: var(--accent);
-  font-style: normal;
-}
 
-/* Secret Whisper */
 .whisper-box {
   margin-top: 24px;
   padding-top: 20px;
@@ -145,66 +139,23 @@ body {
 }
 .whisper-btn {
   background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  font: inherit;
-  font-size: 12px;
-  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text);
   padding: 8px 16px;
   border-radius: 20px;
+  font-size: 12px;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   transition: all 0.2s ease;
 }
-.whisper-btn:hover {
-  background: var(--accent);
-  color: #fff;
-}
+.whisper-btn:active { transform: scale(0.97); }
 .whisper-text {
   display: none;
-  font-size: 13px;
-  font-style: italic;
-  line-height: 1.5;
-  color: var(--text);
-  margin-top: 12px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
-  animation: fadeIn 0.4s ease;
-}
-
-/* Interactive Love Button */
-.love-action {
-  margin-top: 24px;
-  text-align: center;
-}
-.love-btn {
-  background: var(--accent);
-  color: #ffffff;
-  border: 0;
-  font: inherit;
+  margin-top: 14px;
   font-size: 14px;
-  font-weight: 700;
-  padding: 12px 26px;
-  border-radius: 30px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 8px 24px var(--glow);
-  transition: all 0.15s ease;
-}
-.love-btn:active { transform: scale(0.95); }
-
-/* Live Counter Footer */
-.live-counter-pill {
-  margin-top: 20px;
-  font-size: 12px;
-  opacity: 0.65;
-  text-align: center;
-  letter-spacing: 0.5px;
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1.5;
+  animation: fadeIn 0.4s ease;
 }
 
 @keyframes fadeIn {
@@ -212,27 +163,59 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.love-action {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+.love-btn {
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px var(--glow);
+  transition: transform 0.15s ease;
+}
+.love-btn:active { transform: scale(0.95); }
+
+.live-counter-pill {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text);
+  opacity: 0.55;
+  font-family: monospace;
+}
+
 .floating-heart {
   position: fixed;
+  font-size: 20px;
   pointer-events: none;
+  animation: heartFloat 1.8s ease-out forwards;
   z-index: 99;
-  font-size: 24px;
-  animation: floatUpBurst 1.8s ease-out forwards;
 }
-@keyframes floatUpBurst {
-  0% { transform: translateY(0) scale(0.5); opacity: 1; }
-  100% { transform: translateY(-160px) scale(1.6); opacity: 0; }
+
+@keyframes heartFloat {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-160px) scale(1.6); }
 }
 </style>
 </head>
 <body>
-
+<canvas id="theme-canvas" class="bg-canvas"></canvas>
 <div class="sun-orb"></div>
 
 
 <div class="app">
   <div class="top-bar">
-    <a href="https://manvish.netlify.app/" class="back-btn">← Manvish</a>
+    <a href="https://manvish.netlify.app" class="back-btn">← Vishu & Vishwajeet</a>
     <span class="theme-badge">🌅 Golden Hour Edition</span>
   </div>
 
@@ -244,7 +227,7 @@ body {
 
     <div class="quote-container">
       <span class="quote-mark">“</span>
-      <div class="quote-text">Eighty-seven hundred hours and counting, yet every single morning with you still feels like the very first sunrise that taught my heart how to beat.</div>
+      <div class="quote-text">As dawn unspools its golden silk across the sky, my soul bows to your radiant essence, Vishwajeet, the brightest constellation that forever guides my heart.</div>
     </div>
 
     <div class="signature">
@@ -255,7 +238,7 @@ body {
     
     <div class="whisper-box">
       <button class="whisper-btn" onclick="toggleWhisper(this)">🤫 Tap for today's whisper</button>
-      <div class="whisper-text" id="whisper-text">“I'm still entirely spoiled by the way you look at me, Sabaa.”</div>
+      <div class="whisper-text" id="whisper-text">“Even the morning sun hesitates to rise, knowing it can never outshine the warmth of your smile.”</div>
     </div>
   </div>
 
@@ -287,7 +270,7 @@ let hearts = 0;
 function sendLove(e) {
   hearts++;
   const btn = document.getElementById('love-btn');
-  btn.innerHTML = `<span>Vishu received ${hearts} ${hearts === 1 ? 'heart' : 'hearts'}</span> 💕`;
+  btn.innerHTML = "<span>" + "Vishu received " + hearts + (hearts === 1 ? ' heart' : ' hearts') + "</span> 💕";
 
   for (let i = 0; i < 4; i++) {
     const h = document.createElement('div');
@@ -302,7 +285,7 @@ function sendLove(e) {
 }
 
 // Live timer
-const START = new Date("2024-07-03T07:58:00+05:30").getTime();
+const START = new Date("2024-07-03T02:28:00.000Z").getTime();
 function updateTimer() {
   const diff = Date.now() - START;
   const days = Math.floor(diff / 864e5);
@@ -311,7 +294,7 @@ function updateTimer() {
   const secs = Math.floor((diff % 6e4) / 1000);
   const el = document.getElementById('live-timer');
   if (el) {
-    el.textContent = `${days} days, ${hours}h ${mins}m ${secs}s since July 3, 2024 · 7:58 AM`;
+    el.textContent = days + " days, " + hours + "h " + mins + "m " + secs + "s together";
   }
 }
 setInterval(updateTimer, 1000);
