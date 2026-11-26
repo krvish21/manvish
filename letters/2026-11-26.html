@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Day 876 · Vishwajeet & Vishu</title>
+<title>Day 876 · Sabaa & Vishu</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;1,600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #070a14;
-  --card: rgba(15, 23, 42, 0.75);
-  --text: #e2e8f0;
-  --accent: #38bdf8;
-  --glow: rgba(56, 189, 248, 0.4);
-  --font-title: 'Cinzel', serif;
-  --font-body: 'Cormorant Garamond', Georgia, serif;
+  --bg: #1a100a;
+  --card: rgba(38, 22, 14, 0.85);
+  --text: #fef3c7;
+  --accent: #f59e0b;
+  --glow: rgba(245, 158, 11, 0.35);
+  --font-title: 'Lora', serif;
+  --font-body: 'Quicksand', sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -33,11 +33,9 @@ body {
   position: relative;
 }
 
-      body { background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%); overflow-x: hidden; }
-      .bg-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-      .quote-mark { color: #38bdf8; opacity: 0.35; }
-      .quote-text { font-size: 24px; line-height: 1.6; font-style: italic; text-shadow: 0 0 20px rgba(56, 189, 248, 0.3); }
-      .theme-badge { background: rgba(56, 189, 248, 0.12); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.3); }
+      body { background: radial-gradient(ellipse at center, #2e1a0f 0%, #120b06 100%); }
+      .quote-text { font-family: 'Lora', serif; font-size: 23px; line-height: 1.65; font-style: italic; color: #fffbeb; }
+      .theme-badge { background: rgba(245, 158, 11, 0.15); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
     
 
 .app {
@@ -216,8 +214,8 @@ body {
 
 <div class="app">
   <div class="top-bar">
-    <a href="https://manvish.netlify.app" class="back-btn">← Vishu & Vishwajeet</a>
-    <span class="theme-badge">✨ Starlight Edition</span>
+    <a href="https://manvish.netlify.app" class="back-btn">← Vishu & Sabaa</a>
+    <span class="theme-badge">☕ Warm Hearth Edition</span>
   </div>
 
   <div class="card">
@@ -228,7 +226,7 @@ body {
 
     <div class="quote-container">
       <span class="quote-mark">“</span>
-      <div class="quote-text">In a cosmos painted with infinite stars, my soul recognizes only the gravitational pull of your heartbeat, anchoring me forever in your endless grace, Vishwajeet.</div>
+      <div class="quote-text">Wrapped in the quiet of the night, my soul finds its only true home nestled softly against the thought of your heartbeat.</div>
     </div>
 
     <div class="signature">
@@ -239,7 +237,7 @@ body {
     
     <div class="whisper-box">
       <button class="whisper-btn" onclick="toggleWhisper(this)">🤫 Tap for today's whisper</button>
-      <div class="whisper-text" id="whisper-text">“I love you across every timeline, Vishwajeet—always have, always will.”</div>
+      <div class="whisper-text" id="whisper-text">“You can let go of the world now, my sweet girl—I'm holding all the tomorrow's safe for us.”</div>
     </div>
   </div>
 
@@ -302,35 +300,6 @@ setInterval(updateTimer, 1000);
 updateTimer();
 
 
-      const canvas = document.getElementById('theme-canvas');
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let w = canvas.width = window.innerWidth;
-        let h = canvas.height = window.innerHeight;
-        window.onresize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
-        const stars = Array.from({length: 70}, () => ({
-          x: Math.random() * w, y: Math.random() * h,
-          r: Math.random() * 1.5 + 0.4,
-          alpha: Math.random(),
-          speed: Math.random() * 0.02 + 0.005
-        }));
-        function draw() {
-          ctx.clearRect(0,0,w,h);
-          stars.forEach(s => {
-            s.alpha += s.speed;
-            const a = (Math.sin(s.alpha) + 1) / 2;
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(224, 242, 254, " + a + ")";
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = '#38bdf8';
-            ctx.fill();
-          });
-          requestAnimationFrame(draw);
-        }
-        draw();
-      }
-    
 </script>
 </body>
 </html>
