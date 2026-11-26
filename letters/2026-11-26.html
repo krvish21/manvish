@@ -7,16 +7,16 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500;1,700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #1a0f0a;
-  --card: rgba(42, 24, 16, 0.8);
-  --text: #fff1e6;
-  --accent: #f97316;
-  --glow: rgba(249, 115, 22, 0.4);
-  --font-title: 'Playfair Display', serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --bg: #070a14;
+  --card: rgba(15, 23, 42, 0.75);
+  --text: #e2e8f0;
+  --accent: #38bdf8;
+  --glow: rgba(56, 189, 248, 0.4);
+  --font-title: 'Cinzel', serif;
+  --font-body: 'Cormorant Garamond', Georgia, serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -33,10 +33,11 @@ body {
   position: relative;
 }
 
-      body { background: linear-gradient(135deg, #2b1108 0%, #170905 50%, #0d0402 100%); }
-      .quote-text { font-family: 'Playfair Display', serif; font-size: 23px; line-height: 1.65; color: #ffedd5; font-weight: 600; }
-      .theme-badge { background: rgba(249, 115, 22, 0.15); color: #fdba74; border: 1px solid rgba(249, 115, 22, 0.3); }
-      .sun-orb { position: fixed; top: -80px; right: -80px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(251,146,60,0.35) 0%, rgba(234,88,12,0) 70%); filter: blur(40px); pointer-events: none; }
+      body { background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%); overflow-x: hidden; }
+      .bg-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+      .quote-mark { color: #38bdf8; opacity: 0.35; }
+      .quote-text { font-size: 24px; line-height: 1.6; font-style: italic; text-shadow: 0 0 20px rgba(56, 189, 248, 0.3); }
+      .theme-badge { background: rgba(56, 189, 248, 0.12); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.3); }
     
 
 .app {
@@ -210,13 +211,13 @@ body {
 </head>
 <body>
 <canvas id="theme-canvas" class="bg-canvas"></canvas>
-<div class="sun-orb"></div>
+
 
 
 <div class="app">
   <div class="top-bar">
     <a href="https://manvish.netlify.app" class="back-btn">← Vishu & Vishwajeet</a>
-    <span class="theme-badge">🌅 Golden Hour Edition</span>
+    <span class="theme-badge">✨ Starlight Edition</span>
   </div>
 
   <div class="card">
@@ -227,7 +228,7 @@ body {
 
     <div class="quote-container">
       <span class="quote-mark">“</span>
-      <div class="quote-text">As dawn unspools its golden silk across the sky, my soul bows to your radiant essence, Vishwajeet, the brightest constellation that forever guides my heart.</div>
+      <div class="quote-text">In a cosmos painted with infinite stars, my soul recognizes only the gravitational pull of your heartbeat, anchoring me forever in your endless grace, Vishwajeet.</div>
     </div>
 
     <div class="signature">
@@ -238,7 +239,7 @@ body {
     
     <div class="whisper-box">
       <button class="whisper-btn" onclick="toggleWhisper(this)">🤫 Tap for today's whisper</button>
-      <div class="whisper-text" id="whisper-text">“Even the morning sun hesitates to rise, knowing it can never outshine the warmth of your smile.”</div>
+      <div class="whisper-text" id="whisper-text">“I love you across every timeline, Vishwajeet—always have, always will.”</div>
     </div>
   </div>
 
@@ -301,6 +302,35 @@ setInterval(updateTimer, 1000);
 updateTimer();
 
 
+      const canvas = document.getElementById('theme-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+        window.onresize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
+        const stars = Array.from({length: 70}, () => ({
+          x: Math.random() * w, y: Math.random() * h,
+          r: Math.random() * 1.5 + 0.4,
+          alpha: Math.random(),
+          speed: Math.random() * 0.02 + 0.005
+        }));
+        function draw() {
+          ctx.clearRect(0,0,w,h);
+          stars.forEach(s => {
+            s.alpha += s.speed;
+            const a = (Math.sin(s.alpha) + 1) / 2;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(224, 242, 254, " + a + ")";
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#38bdf8';
+            ctx.fill();
+          });
+          requestAnimationFrame(draw);
+        }
+        draw();
+      }
+    
 </script>
 </body>
 </html>
