@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Day 878 · Sabaa & Vishu</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a0f0a;
+  --card: rgba(42, 24, 16, 0.8);
+  --text: #fff1e6;
+  --accent: #f97316;
+  --glow: rgba(249, 115, 22, 0.4);
+  --font-title: 'Playfair Display', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 40px;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+      body { background: linear-gradient(135deg, #2b1108 0%, #170905 50%, #0d0402 100%); }
+      .quote-text { font-family: 'Playfair Display', serif; font-size: 23px; line-height: 1.65; color: #ffedd5; font-weight: 600; }
+      .theme-badge { background: rgba(249, 115, 22, 0.15); color: #fdba74; border: 1px solid rgba(249, 115, 22, 0.3); }
+      .sun-orb { position: fixed; top: -80px; right: -80px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(251,146,60,0.35) 0%, rgba(234,88,12,0) 70%); filter: blur(40px); pointer-events: none; }
+    
+
+.app {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 2;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0.75;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.back-btn:hover { opacity: 1; transform: translateY(-1px); }
+
+.theme-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.card {
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  padding: 32px 24px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4), 0 0 24px var(--glow);
+  position: relative;
+  text-align: center;
+}
+
+.day-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.date-subtitle {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 28px;
+}
+
+.quote-container {
+  position: relative;
+  padding: 10px 8px 16px;
+}
+.quote-mark {
+  font-size: 48px;
+  line-height: 1;
+  font-family: Georgia, serif;
+  display: block;
+  margin-bottom: -10px;
+}
+.quote-text {
+  position: relative;
+  z-index: 1;
+}
+
+.signature {
+  margin-top: 24px;
+  font-size: 14px;
+  font-style: italic;
+  opacity: 0.85;
+}
+.signature b {
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* Secret Whisper */
+.whisper-box {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+}
+.whisper-btn {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.whisper-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.whisper-text {
+  display: none;
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text);
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  animation: fadeIn 0.4s ease;
+}
+
+/* Interactive Love Button */
+.love-action {
+  margin-top: 24px;
+  text-align: center;
+}
+.love-btn {
+  background: var(--accent);
+  color: #ffffff;
+  border: 0;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 26px;
+  border-radius: 30px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px var(--glow);
+  transition: all 0.15s ease;
+}
+.love-btn:active { transform: scale(0.95); }
+
+/* Live Counter Footer */
+.live-counter-pill {
+  margin-top: 20px;
+  font-size: 12px;
+  opacity: 0.65;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.floating-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99;
+  font-size: 24px;
+  animation: floatUpBurst 1.8s ease-out forwards;
+}
+@keyframes floatUpBurst {
+  0% { transform: translateY(0) scale(0.5); opacity: 1; }
+  100% { transform: translateY(-160px) scale(1.6); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="sun-orb"></div>
+
+
+<div class="app">
+  <div class="top-bar">
+    <a href="https://manvish.netlify.app/" class="back-btn">← Manvish</a>
+    <span class="theme-badge">🌅 Golden Hour Edition</span>
+  </div>
+
+  <div class="card">
+    
+    
+    <div class="day-badge">Day 878 With You 💕</div>
+    <div class="date-subtitle">Saturday, 28 November 2026</div>
+
+    <div class="quote-container">
+      <span class="quote-mark">“</span>
+      <div class="quote-text">Sabaa, across eight hundred and seventy-eight sunrises, my favorite place in the entire universe has remained simply wherever you are resting your head.</div>
+    </div>
+
+    <div class="signature">
+      Forever yours,<br>
+      <b>Vishu</b>
+    </div>
+
+    
+    <div class="whisper-box">
+      <button class="whisper-btn" onclick="toggleWhisper(this)">🤫 Tap for today's whisper</button>
+      <div class="whisper-text" id="whisper-text">“I'm still entirely, helplessly addicted to the way you smile, my love.”</div>
+    </div>
+  </div>
+
+  <div class="love-action">
+    <button class="love-btn" id="love-btn" onclick="sendLove(event)">
+      <span>Send Love Back</span>
+      <span id="heart-count">❤️</span>
+    </button>
+  </div>
+
+  <div class="live-counter-pill" id="live-timer">
+    Calculating our heartbeats…
+  </div>
+</div>
+
+<script>
+function toggleWhisper(btn) {
+  const w = document.getElementById('whisper-text');
+  if (w.style.display === 'block') {
+    w.style.display = 'none';
+    btn.innerHTML = "🤫 Tap for today's whisper";
+  } else {
+    w.style.display = 'block';
+    btn.innerHTML = "✨ Today's secret whisper";
+  }
+}
+
+let hearts = 0;
+function sendLove(e) {
+  hearts++;
+  const btn = document.getElementById('love-btn');
+  btn.innerHTML = `<span>Vishu received ${hearts} ${hearts === 1 ? 'heart' : 'hearts'}</span> 💕`;
+
+  for (let i = 0; i < 4; i++) {
+    const h = document.createElement('div');
+    h.className = 'floating-heart';
+    h.textContent = ['💖', '💕', '✨', '❤️'][Math.floor(Math.random() * 4)];
+    const rect = e.target.getBoundingClientRect();
+    h.style.left = (rect.left + rect.width / 2 + (Math.random() * 60 - 30)) + 'px';
+    h.style.top = rect.top + 'px';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 1800);
+  }
+}
+
+// Live timer
+const START = new Date("2024-07-03T07:58:00+05:30").getTime();
+function updateTimer() {
+  const diff = Date.now() - START;
+  const days = Math.floor(diff / 864e5);
+  const hours = Math.floor((diff % 864e5) / 36e5);
+  const mins = Math.floor((diff % 36e5) / 6e4);
+  const secs = Math.floor((diff % 6e4) / 1000);
+  const el = document.getElementById('live-timer');
+  if (el) {
+    el.textContent = `${days} days, ${hours}h ${mins}m ${secs}s since July 3, 2024 · 7:58 AM`;
+  }
+}
+setInterval(updateTimer, 1000);
+updateTimer();
+
+
+</script>
+</body>
+</html>
